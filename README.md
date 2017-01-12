@@ -63,6 +63,32 @@ $ sudo php5enmod rdns
 $ /etc/init.d/php-fpm restart
 ```
 
+### Centos 6 Git
+
+```
+$ sudo yum install libev-devel
+$ cp /usr/include/libev /usr/include
+```
+insert into rdns.c before include pthread.h :
+```
+#ifndef PHP_FE_END
+#define PHP_FE_END {NULL, NULL, NULL}
+#endif
+```
+
+```
+$ git clone https://github.com/weheartwebsites/php-rdns.git
+$ cd php-rdns/
+$ git submodule init
+$ git submodule update
+$ phpize
+$ ./configure
+$ make
+$ make test
+$ sudo make install
+$ echo "extension=rdns.so" >> /etc/php.ini
+``` 
+
 
 ## Usage
 
